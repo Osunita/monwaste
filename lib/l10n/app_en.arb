@@ -1,0 +1,46 @@
+{
+  "@@locale": "en",
+  "homeNextMonthLabel": "Next month",
+  "homeTotalLabel": "Total to pay",
+  "homeNextMonthEmpty": "No expenses next month",
+  "homeActiveCount": "{count, plural, one{{count} active expense} other{{count} active expenses}}",
+  "@homeActiveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNoExpenses": "Add your first expense",
+  "homeTapToSeeDetails": "Tap to see details",
+  "expensesTitle": "Expenses",
+  "expenseFormTitle": "New expense",
+  "expenseFormNameHint": "Expense name",
+  "expenseFormAmountHint": "Amount",
+  "expenseFormPeriodicityLabel": "Frequency",
+  "expenseFormDateLabel": "Charge date",
+  "expenseFormColorLabel": "Color",
+  "settingsTitle": "Settings",
+  "settingsCurrencyLabel": "Currency",
+  "settingsLanguageLabel": "Language",
+  "settingsThemeLabel": "Theme",
+  "settingsThemeSystem": "System",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "commonSave": "Save",
+  "expenseFormNameRequired": "Name is required",
+  "expenseFormAmountPositive": "Amount must be greater than zero",
+  "expenseFormAmountInvalid": "Invalid amount",
+  "expenseFormDateNotSet": "Not set",
+  "expenseFormSelectDate": "Select date",
+  "expenseFormEditTitle": "Edit expense",
+  "expensesEmpty": "No expenses yet",
+  "expensesDeleteConfirm": "Delete this expense?",
+  "commonDelete": "Delete",
+  "commonCancel": "Cancel",
+  "commonEdit": "Edit",
+  "periodicidadMensual": "Monthly",
+  "periodicidadTrimestral": "Quarterly",
+  "periodicidadSemestral": "Semi-annual",
+  "periodicidadAnual": "Annual"
+}

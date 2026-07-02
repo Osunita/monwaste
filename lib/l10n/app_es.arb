@@ -1,0 +1,46 @@
+{
+  "@@locale": "es",
+  "homeNextMonthLabel": "Mes siguiente",
+  "homeTotalLabel": "Total a pagar",
+  "homeNextMonthEmpty": "No hay gastos el mes que viene",
+  "homeActiveCount": "{count, plural, one{{count} gasto activo} other{{count} gastos activos}}",
+  "@homeActiveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNoExpenses": "Añade tu primer gasto",
+  "homeTapToSeeDetails": "Toca para ver detalles",
+  "expensesTitle": "Gastos",
+  "expenseFormTitle": "Nuevo gasto",
+  "expenseFormNameHint": "Nombre del gasto",
+  "expenseFormAmountHint": "Importe",
+  "expenseFormPeriodicityLabel": "Periodicidad",
+  "expenseFormDateLabel": "Fecha de cobro",
+  "expenseFormColorLabel": "Color",
+  "settingsTitle": "Ajustes",
+  "settingsCurrencyLabel": "Moneda",
+  "settingsLanguageLabel": "Idioma",
+  "settingsThemeLabel": "Tema",
+  "settingsThemeSystem": "Sistema",
+  "settingsThemeLight": "Claro",
+  "settingsThemeDark": "Oscuro",
+  "commonSave": "Guardar",
+  "expenseFormNameRequired": "El nombre es obligatorio",
+  "expenseFormAmountPositive": "El importe debe ser mayor que cero",
+  "expenseFormAmountInvalid": "Importe inválido",
+  "expenseFormDateNotSet": "Sin asignar",
+  "expenseFormSelectDate": "Seleccionar fecha",
+  "expenseFormEditTitle": "Editar gasto",
+  "expensesEmpty": "No hay gastos aún",
+  "expensesDeleteConfirm": "¿Eliminar este gasto?",
+  "commonDelete": "Eliminar",
+  "commonCancel": "Cancelar",
+  "commonEdit": "Editar",
+  "periodicidadMensual": "Mensual",
+  "periodicidadTrimestral": "Trimestral",
+  "periodicidadSemestral": "Semestral",
+  "periodicidadAnual": "Anual"
+}
