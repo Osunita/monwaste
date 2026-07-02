@@ -34,8 +34,6 @@ dependencies:
   # Formatting
   intl: ^0.20.2
 
-  # Home screen widget (wired, not actively used until v1.1)
-  home_widget: ^0.9.2
 
 dev_dependencies:
   flutter_test:
