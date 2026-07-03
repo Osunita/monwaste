@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "homeNextMonthLabel": "Next month",
+  "homeNextMonthPagaras": "Next month you'll pay",
   "homeTotalLabel": "Total to pay",
   "homeNextMonthEmpty": "No expenses next month",
   "homeActiveCount": "{count, plural, one{{count} active expense} other{{count} active expenses}}",

@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Next month'**
   String get homeNextMonthLabel;
 
+  /// No description provided for @homeNextMonthPagaras.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month you\'ll pay'**
+  String get homeNextMonthPagaras;
+
   /// No description provided for @homeTotalLabel.
   ///
   /// In en, this message translates to:

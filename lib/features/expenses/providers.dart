@@ -134,7 +134,9 @@ class ExpenseFormNotifier extends StateNotifier<ExpenseFormState> {
       valid = false;
     }
 
-    final parsed = double.tryParse(state.importe);
+    // Normalize comma decimal separator (4,50 → 4.50) for locale support.
+    final normalized = state.importe.trim().replaceAll(',', '.');
+    final parsed = double.tryParse(normalized);
     if (parsed == null || parsed <= 0) {
       importeErr = 'importe_positive';
       valid = false;
@@ -153,7 +155,7 @@ class ExpenseFormNotifier extends StateNotifier<ExpenseFormState> {
 
     state = state.copyWith(isSaving: true);
 
-    final importe = double.parse(state.importe);
+    final importe = double.parse(state.importe.replaceAll(',', '.'));
     final colorHex =
         '#${state.color.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}';
 

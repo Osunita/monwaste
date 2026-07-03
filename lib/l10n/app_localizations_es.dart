@@ -12,6 +12,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeNextMonthLabel => 'Mes siguiente';
 
   @override
+  String get homeNextMonthPagaras => 'El próximo mes pagarás';
+
+  @override
   String get homeTotalLabel => 'Total a pagar';
 
   @override

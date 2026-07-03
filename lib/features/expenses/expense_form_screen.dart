@@ -31,13 +31,35 @@ class ExpenseFormScreen extends ConsumerStatefulWidget {
 
 class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nombreController = TextEditingController();
+  final _importeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // If creating a new expense, cycle the default color based on count.
+    // Sync controllers when the form state loads (async _loadExisting).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final formState = ref.read(expenseFormProvider(widget.editId));
+      _syncControllers(formState);
+    });
     if (widget.editId == null) {
       _initDefaultColor();
+    }
+  }
+
+  @override
+  void dispose() {
+    _nombreController.dispose();
+    _importeController.dispose();
+    super.dispose();
+  }
+
+  void _syncControllers(ExpenseFormState formState) {
+    if (_nombreController.text != formState.nombre) {
+      _nombreController.text = formState.nombre;
+    }
+    if (_importeController.text != formState.importe) {
+      _importeController.text = formState.importe;
     }
   }
 
@@ -45,7 +67,6 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
     final db = ref.read(databaseProvider);
     final count = await db.select(db.gastos).get().then((list) => list.length);
     final color = _defaultColors[count % _defaultColors.length];
-    // Small delay to ensure the provider is initialized.
     Future.microtask(() {
       ref.read(expenseFormProvider(null).notifier).setColor(color);
     });
@@ -56,6 +77,12 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
     final l10n = AppLocalizations.of(context)!;
     final formState = ref.watch(expenseFormProvider(widget.editId));
     final formNotifier = ref.read(expenseFormProvider(widget.editId).notifier);
+
+    // Sync controllers when formState changes (e.g. after _loadExisting).
+    ref.listen<ExpenseFormState>(
+      expenseFormProvider(widget.editId),
+      (_, next) => _syncControllers(next),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -72,7 +99,7 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
           children: [
             // --- Name field ---
             TextFormField(
-              initialValue: formState.nombre,
+              controller: _nombreController,
               decoration: InputDecoration(
                 labelText: l10n.expenseFormNameHint,
                 errorText: formState.nombreError != null
@@ -86,7 +113,7 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
 
             // --- Amount field ---
             TextFormField(
-              initialValue: formState.importe,
+              controller: _importeController,
               decoration: InputDecoration(
                 labelText: l10n.expenseFormAmountHint,
                 errorText: _amountError(l10n, formState.importeError),
@@ -143,6 +170,24 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
               labelTypes: const [], // gradient bar only — no labels
             ),
             const SizedBox(height: 24),
+
+            // --- Delete button (edit mode only) ---
+            if (formState.isEditMode) ...[
+              OutlinedButton.icon(
+                onPressed: formState.isSaving
+                    ? null
+                    : () => _delete(context, formNotifier),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+                icon: const Icon(Icons.delete_outline),
+                label: Text(l10n.commonDelete),
+              ),
+              const SizedBox(height: 12),
+            ],
 
             // --- Save button ---
             FilledButton(
@@ -202,8 +247,39 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   ) async {
     final id = await notifier.save();
     if (id < 0) return; // validation failed, errors are shown
-    // Fire-and-forget reschedule so widget tests don't hang on stream
-    // .first() in environments without a running event loop.
+    rescheduleNotifications(ref);
+    if (context.mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _delete(
+    BuildContext context,
+    ExpenseFormNotifier notifier,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.expenseFormEditTitle),
+        content: Text(l10n.expensesDeleteConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(l10n.commonCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: Text(l10n.commonDelete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    final db = ref.read(databaseProvider);
+    await db.deleteGasto(widget.editId!);
     rescheduleNotifications(ref);
     if (context.mounted) Navigator.of(context).pop();
   }
