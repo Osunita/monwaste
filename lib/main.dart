@@ -202,6 +202,7 @@ class _MonwasteAppState extends ConsumerState<MonwasteApp>
 
     return MaterialApp.router(
       title: 'Monwaste',
+      debugShowCheckedModeBanner: false,
       routerConfig: _router,
       theme: lightTheme,
       darkTheme: darkTheme,

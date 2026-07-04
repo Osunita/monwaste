@@ -44,6 +44,9 @@ AGENTS.md
 .atl/
 .agent/
 
+# Source icon for flutter_launcher_icons (generated icons are tracked)
+/monwaste.png
+
 # Symbolication related
 app.*.symbols
 
@@ -54,3 +57,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Release signing — never commit keystore or key properties
+/android/app/monwaste-keystore.jks
+/android/app/key.properties
