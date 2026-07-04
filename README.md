@@ -30,7 +30,3 @@ dart run build_runner build --delete-conflicting-outputs
 flutter test
 flutter run
 ```
-
-## Licencia
-
-Privado.
