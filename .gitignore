@@ -33,6 +33,11 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Agent / AI tooling — never commit to project repo
+AGENTS.md
+.atl/
+.agent/
+
 # Symbolication related
 app.*.symbols
 
