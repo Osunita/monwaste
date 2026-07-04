@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../l10n/l10n.dart';
-import '../../shared/providers.dart';
+import '../../shared/currency_utils.dart';
 import '../expenses/providers.dart';
 import 'providers.dart';
 
@@ -22,12 +21,8 @@ class HomeScreen extends ConsumerWidget {
     final activeGastos = ref.watch(activeGastoListProvider).valueOrNull ?? [];
     final activeCount = activeGastos.length;
 
-    final currencyCode = ref.watch(currencyCodeProvider);
-
-    final totalFormatted = NumberFormat.currency(
-      symbol: _currencySymbol(currencyCode),
-      decimalDigits: 2,
-    ).format(summary.total);
+    final currencyFormatter = ref.watch(currencyFormatterProvider);
+    final totalFormatted = currencyFormatter.format(summary.total);
 
     return Scaffold(
       appBar: AppBar(
@@ -103,21 +98,17 @@ class HomeScreen extends ConsumerWidget {
                   color: theme.colorScheme.primaryContainer,
                 ),
                 child: Center(
-                  child: Text(
-                    totalFormatted,
-                    style: theme.textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onPrimaryContainer,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      totalFormatted,
+                      style: theme.textTheme.displayLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onPrimaryContainer,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                l10n.homeNextMonthLabel,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 4),
@@ -141,26 +132,4 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  String _currencySymbol(String code) {
-    switch (code) {
-      case 'EUR':
-        return '€';
-      case 'USD':
-        return r'$';
-      case 'GBP':
-        return '£';
-      case 'JPY':
-        return '¥';
-      case 'CAD':
-        return 'CA\$';
-      case 'BRL':
-        return 'R\$';
-      case 'ARS':
-        return 'AR\$';
-      case 'MXN':
-        return 'MX\$';
-      default:
-        return code;
-    }
-  }
 }

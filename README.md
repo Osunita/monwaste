@@ -1,17 +1,36 @@
-# monwaste
+# Monwaste
 
-A new Flutter project.
+Nunca olvides cuánto dinero se va cada mes.
 
-## Getting Started
+App móvil (Flutter, Android + iOS) que te dice en menos de 1 segundo cuánto vas a pagar en gastos recurrentes el mes que viene.
 
-This project is a starting point for a Flutter application.
+Sin cuentas, sin servidores, sin publicidad, sin conexión al banco. Todo en el dispositivo.
 
-A few resources to get you started if this is your first Flutter project:
+## Stack
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- **Flutter** + **Dart**
+- **Drift** (SQLite, type-safe)
+- **Riverpod** (estado)
+- **GoRouter** (navegación)
+- **flutter_local_notifications** (notificaciones locales)
+- **intl** (fechas/moneda)
+- **flutter gen-l10n** (i18n ES + EN)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Requisitos
+
+- Flutter SDK ^3.11.3
+- Android SDK / Xcode
+
+## Desarrollo
+
+```sh
+flutter pub get
+flutter gen-l10n
+dart run build_runner build --delete-conflicting-outputs
+flutter test
+flutter run
+```
+
+## Licencia
+
+Privado.

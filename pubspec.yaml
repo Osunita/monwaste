@@ -34,6 +34,9 @@ dependencies:
   # Formatting
   intl: ^0.20.2
 
+  # Glance widget (Android home screen)
+  glance_widget: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:

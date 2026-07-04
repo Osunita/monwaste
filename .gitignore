@@ -30,8 +30,14 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+**/build/
 /coverage/
+
+# Desktop/web platforms — not used (mobile-only: Android + iOS)
+/linux/
+/macos/
+/windows/
+/web/
 
 # Agent / AI tooling — never commit to project repo
 AGENTS.md

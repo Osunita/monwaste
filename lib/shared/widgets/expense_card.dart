@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/database/database.dart';
 import '../../l10n/l10n.dart';
-import '../providers.dart';
+import '../currency_utils.dart';
 
 /// Shared card widget for displaying a single [Gasto].
 ///
@@ -29,7 +29,8 @@ class ExpenseCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    final currencyCode = ref.watch(currencyCodeProvider);
+    final currencyFormatter = ref.watch(currencyFormatterProvider);
+    final amountFormatted = currencyFormatter.format(gasto.importe);
 
     final color = Color(
       int.parse(gasto.color.substring(1), radix: 16) | 0xFF000000,
@@ -42,11 +43,6 @@ class ExpenseCard extends ConsumerWidget {
       'anual' => l10n.periodicidadAnual,
       _ => gasto.periodicidad,
     };
-
-    final amountFormatted = NumberFormat.currency(
-      symbol: _currencySymbol(currencyCode),
-      decimalDigits: 2,
-    ).format(gasto.importe);
 
     final dateFormatted = gasto.fechaCobro != null
         ? DateFormat.MMMd().format(gasto.fechaCobro!)
@@ -122,26 +118,4 @@ class ExpenseCard extends ConsumerWidget {
     );
   }
 
-  String _currencySymbol(String code) {
-    switch (code) {
-      case 'EUR':
-        return '€';
-      case 'USD':
-        return r'$';
-      case 'GBP':
-        return '£';
-      case 'JPY':
-        return '¥';
-      case 'CAD':
-        return 'CA\$';
-      case 'BRL':
-        return 'R\$';
-      case 'ARS':
-        return 'AR\$';
-      case 'MXN':
-        return 'MX\$';
-      default:
-        return code;
-    }
-  }
 }

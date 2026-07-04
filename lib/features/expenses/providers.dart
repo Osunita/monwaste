@@ -159,13 +159,17 @@ class ExpenseFormNotifier extends StateNotifier<ExpenseFormState> {
     final colorHex =
         '#${state.color.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}';
 
+    // Si el usuario no eligió fecha, se asume el día 1 del mes actual
+    // (ver AGENTS.md: "fecha de cobro opcional, por defecto día 1 del mes
+    // de creación").
+    final now = DateTime.now();
+    final fechaCobro = state.fechaCobro ?? DateTime(now.year, now.month, 1);
+
     final companion = GastosCompanion.insert(
       nombre: state.nombre.trim(),
       importe: importe,
       periodicidad: state.periodicidad.name,
-      fechaCobro: state.fechaCobro != null
-          ? Value(state.fechaCobro!)
-          : const Value.absent(),
+      fechaCobro: Value(fechaCobro),
       color: colorHex,
     );
 
